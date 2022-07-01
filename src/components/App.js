@@ -148,6 +148,7 @@ export default function App() {
     const signOut = () => {
         setIsLoggedIn(false);
         localStorage.removeItem('token');
+        history.push("/sign-in");
     }
 
     const handleRegister = (data) => {
