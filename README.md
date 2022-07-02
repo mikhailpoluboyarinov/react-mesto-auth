@@ -4,4 +4,4 @@
 Создал роуты для регистрации и авторизации.
 Здесь я записываю токен пользотвателя в LocalStorage и реализовываю работу с ним.
 
-https://mikhailpoluboyarinov.github.io/react-mesto-auth/
+* [Ссылка на макет в Figma] (https://mikhailpoluboyarinov.github.io/react-mesto-auth/)
