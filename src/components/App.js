@@ -19,7 +19,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 import '../index.css';
 
-import avatarProfile from "../images/avatar.jpg";
 import {AddPlacePopup} from "./AddPlacePopup";
 
 export default function App() {
@@ -31,7 +30,6 @@ export default function App() {
     const [currentUser, setCurrentUser] = useState({});
     const [cards, setCards] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(Boolean(localStorage.getItem('token')));
-    const [email, setEmail] = useState('');
     const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
     const [isRegistrationComplete, setIsRegistrationComplete] = useState(false);
     const history = useHistory();
@@ -46,8 +44,8 @@ export default function App() {
                 setCards(cards);
                 setCurrentUser({
                     ...userInfo,
-                    ...userInfoPrivate
-                })
+                    ...userInfoPrivate.data
+                });
             }).catch((err) => {
                 console.log(err);
             });
@@ -141,10 +139,6 @@ export default function App() {
         }
     }
 
-    const handleEmail = (email) => {
-        setEmail(email);
-    }
-
     const signOut = () => {
         setIsLoggedIn(false);
         localStorage.removeItem('token');
@@ -156,7 +150,6 @@ export default function App() {
             setIsInfoTooltipOpen(true);
             setIsRegistrationComplete(true);
         }).catch(() => {
-            console.log('catch', 123)
             setIsInfoTooltipOpen(true);
             setIsRegistrationComplete(false);
         })
@@ -183,7 +176,7 @@ export default function App() {
       <CurrentUserContext.Provider value={currentUser}>
           <div className="page__content">
             <Header
-                userEmail={email}
+                userEmail={currentUser.email}
                 onSignOut={signOut}
             />
               <Switch>
