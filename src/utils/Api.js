@@ -15,9 +15,7 @@ export class Api {
         return fetch(this._baseUrl + suffix, {
             headers: this._headers
         })
-            .then((res) => this._checkResponse(res)).catch((err) => {
-                console.log(err);
-            })
+            .then((res) => this._checkResponse(res))
     }
 
     _patchData(suffix, data) {
@@ -26,9 +24,7 @@ export class Api {
             headers: this._headers,
             body: JSON.stringify(data)
         })
-            .then((res) => this._checkResponse(res)).catch((err) => {
-                console.log(err);
-            })
+            .then((res) => this._checkResponse(res))
     }
 
     _postData(suffix, data) {
@@ -37,9 +33,7 @@ export class Api {
             headers: this._headers,
             body: JSON.stringify(data)
         })
-            .then((res) => this._checkResponse(res)).catch((err) => {
-                console.log(err);
-            })
+            .then((res) => this._checkResponse(res))
     }
 
     _deleteData(suffix) {
@@ -47,9 +41,7 @@ export class Api {
             method: 'DELETE',
             headers: this._headers
         })
-            .then((res) => this._checkResponse(res)).catch((err) => {
-                console.log(err);
-            })
+            .then((res) => this._checkResponse(res))
     }
 
     _putData(suffix) {
@@ -57,9 +49,7 @@ export class Api {
             method: 'PUT',
             headers: this._headers
         })
-            .then((res) => this._checkResponse(res)).catch((err) => {
-                console.log(err);
-            })
+            .then((res) => this._checkResponse(res))
     }
 
     getUserInfo() {

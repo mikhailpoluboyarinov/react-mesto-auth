@@ -7,7 +7,6 @@ export default function Header(props) {
 
     const location = useLocation();
 
-    console.log(userEmail);
     return (
         <header className="header">
             <img className="header__logo" src={logoMesto} alt="Логотип" />

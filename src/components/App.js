@@ -44,7 +44,7 @@ export default function App() {
                 setCards(cards);
                 setCurrentUser({
                     ...userInfo,
-                    ...userInfoPrivate.data
+                    ...userInfoPrivate
                 });
             }).catch((err) => {
                 console.log(err);
@@ -75,6 +75,22 @@ export default function App() {
         setIsImagePopupOpen(false);
         setIsInfoTooltipOpen(false);
     }
+
+    const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || setIsImagePopupOpen
+
+    useEffect(() => {
+        function closeByEscape(evt) {
+            if(evt.key === 'Escape') {
+                closeAllPopups();
+            }
+        }
+        if(isOpen) {
+            document.addEventListener('keydown', closeByEscape);
+            return () => {
+                document.removeEventListener('keydown', closeByEscape);
+            }
+        }
+    }, [isOpen])
 
     const handleUpdateUser = (data) => {
         api.patchUserInfo(data).then((user) => {
@@ -111,7 +127,6 @@ export default function App() {
 
     const handleCardLike = (card) => {
         const isLiked = card.likes.some(item => item._id === currentUser._id);
-
         if (isLiked) {
             api.deleteLike(card._id).then((card) => {
                 updateCards(card);
@@ -135,7 +150,9 @@ export default function App() {
                 setCards((state) => {
                     return state.filter(item => item._id !== card._id);
                 })
-            })
+            }).catch((err) => {
+                console.log(err);
+            });
         }
     }
 
@@ -147,11 +164,11 @@ export default function App() {
 
     const handleRegister = (data) => {
         apiAuth.registerUser(data).then(() => {
-            setIsInfoTooltipOpen(true);
             setIsRegistrationComplete(true);
         }).catch(() => {
-            setIsInfoTooltipOpen(true);
             setIsRegistrationComplete(false);
+        }).finally(() => {
+            setIsInfoTooltipOpen(true);
         })
     }
 
@@ -176,7 +193,7 @@ export default function App() {
       <CurrentUserContext.Provider value={currentUser}>
           <div className="page__content">
             <Header
-                userEmail={currentUser.email}
+                userEmail={currentUser.data ? currentUser.data.email : ''}
                 onSignOut={signOut}
             />
               <Switch>
