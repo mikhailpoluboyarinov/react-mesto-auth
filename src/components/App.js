@@ -32,6 +32,7 @@ export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(Boolean(localStorage.getItem('token')));
     const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
     const [isRegistrationComplete, setIsRegistrationComplete] = useState(false);
+    const [email, setEmail] = useState('');
     const history = useHistory();
 
     useEffect(() => {
@@ -76,7 +77,7 @@ export default function App() {
         setIsInfoTooltipOpen(false);
     }
 
-    const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || setIsImagePopupOpen
+    const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || isImagePopupOpen
 
     useEffect(() => {
         function closeByEscape(evt) {
@@ -94,7 +95,10 @@ export default function App() {
 
     const handleUpdateUser = (data) => {
         api.patchUserInfo(data).then((user) => {
-            setCurrentUser(user);
+            setCurrentUser({
+                ...currentUser,
+                ...user
+            });
             closeAllPopups();
         }).catch((err) => {
             console.log(err);
@@ -103,7 +107,10 @@ export default function App() {
 
     const handleUpdateAvatar = (data) => {
         api.patchUserAvatar(data).then((user) => {
-            setCurrentUser(user);
+            setCurrentUser({
+                ...currentUser,
+                ...user
+            });
             closeAllPopups();
         }).catch((err) => {
             console.log(err);
